@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Loading...</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    #loadingScreen, #terminal, #finalScreen {
+      display: none;
+    }
+
+    #terminal {
+      white-space: pre-wrap;
+      padding: 20px;
+      font-size: 14px;
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+
+    #finalScreen h1 {
+      color: red;
+      font-size: 3em;
+    }
+
+    #finalScreen span {
+      color: white;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body onclick="goFullscreen()">
+
+  <!-- Loading -->
+  <div id="loadingScreen" class="center">
+    <h1>Loading system modules...</h1>
+    <progress></progress>
+  </div>
+
+  <!-- Fake Terminal -->
+  <div id="terminal"></div>
+
+  <!-- Final Scare -->
+  <div id="finalScreen" class="center">
+    <h1>⚠️ Your Device Has Been Hacked by <span>DECODER</span></h1>
+    <p></p>
+  </div>
+
+  <script>
+    function goFullscreen() {
+      let el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+      document.body.onclick = null;
+    }
+
+    const loadingScreen = document.getElementById('loadingScreen');
+    const terminal = document.getElementById('terminal');
+    const finalScreen = document.getElementById('finalScreen');
+
+    const fakeCommands = [
+      "[+] Initializing kernel modules...",
+      "[+] Mounting /dev/sda1...",
+      "[+] Loading exploit script...",
+      "[+] Connecting to target device...",
+      "[+] Authentication bypass: SUCCESS",
+      "[+] Extracting credentials...",
+      "[+] Username: admin",
+      "[+] Password: ********",
+      "[+] Uploading payload: hack_payload_v3.2.1.exe",
+      "[+] Injecting process into PID 4232...",
+      "[+] Gaining root access...",
+      "[+] Root access: GRANTED",
+      "[+] Disabling antivirus...",
+      "[+] Uploading data to remote server...",
+      "[+] Compressing user files...",
+      "[+] Encrypting local storage...",
+      "[+] Injecting ransomware...",
+      "[+] Generating encryption key: 9AF3-55XC-LM23",
+      "[+] Key sent to server",
+      "[+] Starting system corruption...",
+      "[+] Deleting system32...",
+      "[+] Tracking IP: 182.72.91.34...",
+      "[+] Accessing webcam...",
+      "[+] Camera stream: ACTIVE",
+      "[+] HACK COMPLETE."
+    ];
+
+    // Add extra random code
+    function generateRandomCodeLines(count) {
+      const lines = [];
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=';
+      for (let i = 0; i < count; i++) {
+        let line = '';
+        for (let j = 0; j < Math.floor(Math.random() * 60) + 20; j++) {
+          line += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        lines.push(line);
+      }
+      return lines;
+    }
+
+    // Typing simulation
+    function showTerminalText(lines, delay = 80, doneCallback) {
+      let i = 0;
+      function typeLine() {
+        if (i < lines.length) {
+          terminal.innerHTML += lines[i] + '\n';
+          terminal.scrollTop = terminal.scrollHeight;
+          i++;
+          setTimeout(typeLine, delay);
+        } else {
+          doneCallback();
+        }
+      }
+      typeLine();
+    }
+
+    // Master flow
+    window.onload = () => {
+      loadingScreen.style.display = 'block';
+
+      // Show loading screen first
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        terminal.style.display = 'block';
+
+        // Combine fake commands + 50 lines of garbage code
+        const allLines = [...fakeCommands, ...generateRandomCodeLines(50)];
+
+        // Show fake terminal text
+        showTerminalText(allLines, 50, () => {
+          setTimeout(() => {
+            terminal.style.display = 'none';
+            finalScreen.style.display = 'block';
+          }, 2000);
+        });
+
+      }, 3000);
+    };
+  </script>
+</body>
+</html>
